@@ -1,12 +1,12 @@
 #for data manipulation functions
 library(tidyverse)
 
-#set wd to source file location
+#sets working directory to this scritp's location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 #read in ctd table from Oceanography Database
 #takes primary sigma theta, if NA checks secondary sigma theta
-#rounds depths to nearest integer so filter command works further down the line
+#rounds depths to nearest integer so filter command works further down the line (note, these should be fixed in database, this is a workaround)
 ctd <- read.csv("CTD.csv") %>%
   mutate(SIGMA_THETA=ifelse(is.na(PRIMARY_SIGMA_THETA),SECONDARY_SIGMA_THETA,PRIMARY_SIGMA_THETA)) %>%
   mutate(DEPTH=round(DEPTH,digits=0)) %>%
